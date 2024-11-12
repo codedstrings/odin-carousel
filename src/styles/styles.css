@@ -19,7 +19,9 @@ h1{
 
 .carousel-slide {
     width: 100%;
-    flex-shrink: 0;
+    height: 80vh;
+    object-fit: cover;
+    display: block;
 }
 
 .prev, .next {
