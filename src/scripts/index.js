@@ -34,7 +34,7 @@ class Carousel {
 
         const translateValue = -this.slideIndex * (100 / this.slides.length);
         this.track.style.transform = `translateX(${translateValue}%)`;
-        
+
         this.dots.forEach((dot, index) => {
             dot.classList.toggle('active', index === this.slideIndex);
         });
@@ -75,6 +75,20 @@ class Carousel {
     }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+async function fetchimage(img) {
+    try {
+        const apikey = 'AlLGW1neq4NEfSsuuOAr3FwxA4pu2irj';
+        const url = `https://api.giphy.com/v1/gifs/random?api_key=${apikey}&tag=cute+cat&rating=g`;
+        const response = await fetch(url, { mode: 'cors' });
+        const catData = await response.json();
+        img.src = catData.data.images.original.url;
+    } catch (error) {
+        console.error('Error fetching image:', error);
+    }
+}
+
+document.addEventListener('DOMContentLoaded', async () => {
     new Carousel();
+    const images = document.querySelectorAll('img');
+    await Promise.all(Array.from(images).map(img => fetchimage(img)));
 });
